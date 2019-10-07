@@ -1,0 +1,13 @@
+
+p.card-text.small {
+    color: rgb(85, 82, 82);
+    font-style: italic;
+}
+
+.deleteForm {
+    display: inline;
+}
+
+a.btn-warning {
+    color: white;
+}
