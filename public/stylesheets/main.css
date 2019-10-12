@@ -11,3 +11,7 @@ p.card-text.small {
 a.btn-warning {
     color: white;
 }
+
+.userButton {
+    width: 100%;
+}

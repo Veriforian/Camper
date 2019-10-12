@@ -5,7 +5,7 @@
         <h1 style="text-align: center;">Add a New Comment to <%= campground.name %></h1>
 
         <div class="mt-3" style="width: 30%; margin: 0 auto;">
-            <form action="/campgrounds/<%= campground._id %>/comments" method="POST">
+            <form action="/campgrounds/<%= campground.slug %>/comments" method="POST">
                 <div class="form-group">
                     <textarea class="form-control" name="comment[text]" rows="7" placeholder="Comment"></textarea>
                 </div>

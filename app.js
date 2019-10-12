@@ -1,6 +1,5 @@
 // Add packages to app //
 const express          = require("express"),
-      app              = express(),
       bodyParser       = require("body-parser"),
       mongoose         = require("mongoose"),
       session          = require("express-session"),
@@ -8,20 +7,25 @@ const express          = require("express"),
       LocalStrategy    = require("passport-local"),
       flash            = require("connect-flash"),
       methodOverride   = require("method-override"),
+      //Connect Mongoose model files
       Campground       = require("./models/campground"),
       Comment          = require("./models/comment"),
       User             = require("./models/user"),
       seedDB           = require("./seeds");
-
+      app = express();
 //Connect route files
 const commentRoutes    = require("./routes/comments"),
       campgroundRoutes = require("./routes/campgrounds"),
       authRoutes       = require("./routes/auth"),
       indexRoutes      = require("./routes/index");
-
 // Configure express / and add middleware 
-app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
+app.use(session({
+    secret: "Ben Jones was born on the 28th of May, 2000",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(`${__dirname}/public`));
 app.use(methodOverride("_method")); 
 app.use(flash());
@@ -32,14 +36,9 @@ mongoose.connect("mongodb://localhost:27017/yelp_camp", {
     useCreateIndex: true,
     useUnifiedTopology: true
 });
-//Seeding the database
+//Seeding the database - for testing
 //seedDB();
 //Configure Passport
-app.use(session({
-    secret: "Ben Jones was born on the 28th of May, 2000",
-    resave: false,
-    saveUninitialized: false
-}));
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
@@ -53,12 +52,11 @@ app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     next();
 });
-
-app.use("/",indexRoutes);
-app.use("/campgrounds/:id/comments", commentRoutes);
+//Telling the route files to what to expect in their routes
+app.use("/", indexRoutes);
+app.use("/campgrounds/:slug/comments", commentRoutes);
 app.use("/campgrounds", campgroundRoutes);
 app.use("/", authRoutes);
-
 
 // Start Server //
 app.listen(3000, () => {

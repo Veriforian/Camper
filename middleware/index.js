@@ -7,7 +7,7 @@ const middlewareObj = {};
 //Campground authorization
 middlewareObj.checkCampgroundOwnership = function(req, res, next) {
     if(req.isAuthenticated()) {
-        Campground.findById(req.params.id, (err, foundCampground) => {
+        Campground.findOne({slug: req.params.slug}, (err, foundCampground) => {
             if(err || !foundCampground) {
                 req.flash("error", "Campground not found.");
                 return res.redirect("back");
