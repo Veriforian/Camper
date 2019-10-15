@@ -9,19 +9,6 @@ const express    = require("express"),
 // Comments routes //
 //-----------------//
 
-//Comment new route
-router.get("/new", middleware.isLoggedIn, (req, res) => {
-    Campground.findOne({slug: req.params.slug}, (err, campground) => {
-        if(err || !campground) {
-            console.log(err);
-            req.flash("error", "Oops, something went wrong!");
-            res.redirect("/campgrounds")
-        } else {
-            res.render("comments/new", {campground: campground});
-        };
-    });
-});
-
 //Comment create route
 router.post("/", middleware.isLoggedIn, (req, res) => {
     Campground.findOne({slug: req.params.slug}, (err, foundCampground) => {
@@ -43,17 +30,6 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
                 };
             });
         };
-    });
-});
-
-//Comment Edit Route
-router.get("/:comment_id/edit", middleware.checkCommentOwnership, (req, res) => {
-    Comment.findById(req.params.comment_id, (err, foundComment) => {
-        if(err) {
-            console.log(err);
-            return res.redirect("back");
-        }
-        res.render("comments/edit", {campground_slug: req.params.slug, comment: foundComment});
     });
 });
 

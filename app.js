@@ -57,8 +57,8 @@ app.use("/", indexRoutes);
 app.use("/campgrounds/:slug/comments", commentRoutes);
 app.use("/campgrounds", campgroundRoutes);
 app.use("/", authRoutes);
-
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 // Start Server //
-app.listen(3000, () => {
-    console.log("YelpCamp app started on port 3000");
+app.listen(process.env.PORT || 3000, () => {
+    console.log("YelpCamp app started");
 });

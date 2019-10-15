@@ -5,7 +5,6 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/dc40f2e3f3.js" crossorigin="anonymous"></script>
         <link href="/stylesheets/main.css" type="text/css" rel="stylesheet">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js" integrity="sha256-ffw+9zwShMev88XNrDgS0hLIuJkDfXhgyLogod77mn8=" crossorigin="anonymous"></script>
         <title>YelpCamp</title>
     </head>
     <body>
@@ -23,10 +22,10 @@
                 <ul class="navbar-nav">
                     <% if (!currentUser) { %>
                         <li class="nav-item">
-                            <a class="nav-link loginButton" href="/login">Login<i class="fas fa-user pl-2"></i></a>
+                            <a class="nav-link loginButton" data-toggle="modal" data-target="#loginModal" onclick="loginForm()">Login<i class="fas fa-user pl-2"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link registerButton" href="/register">Sign-Up<i class="fas fa-user-plus pl-2"></i></a>
+                            <a class="nav-link registerButton" data-toggle="modal" data-target="#loginModal" onclick="registerForm()">Sign-Up<i class="fas fa-user-plus pl-2"></i></a>
                         </li>
                     <% } else { %>
                         <li class="nav-item">
@@ -41,22 +40,82 @@
         </nav>
         <div class="container">
             <% if(error && error.length > 0) { %>
-            <div class="alert alert-danger" role="alert">
+            <div class="alert alert-danger alert-dismissable fade show" role="alert">
                 <%= error %>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <% } %>
             <% if(success && success.length > 0) { %>
-            <div class="alert alert-success" role="alert">
+            <div class="alert alert-success alert-dismissable fade show" role="alert">
                 <%= success %>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <% } %>
         </div>
-        <div class="modal">
-            <div class="model-content">
-                <div class="tabs">
-                    <button class="tabLinks" id="login"></button>
-                    <button class="tabLinks" id="register"></button>
+        <!--Login Modal -->
+        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="tab">
+                        <button class="tabLinks logLink" onclick="openTab(event, 'login')">Login</button>
+                        <button class="tabLinks regLink" onclick="openTab(event, 'register')">Sign-up</button>
+                   </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <div id="login" class="tabContent">
+                        <form action="/login" method="POST">
+                            <div class="form-group row formContent">
+                                <div class="col-md-6">
+                                    <label for="logUsername">Username</label>
+                                    <input class="form-control" id="logUsername" type="text" name="username" placeholder="username" required>
+                                </div>        
+                                <div class="col-md-6">
+                                    <label for="logPassword">Password</label>
+                                    <input id="logPassword" class="form-control" type="password" name="password" placeholder="password" required>
+                                    <a href="/forgot">Forgot your password?</a>       
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button class="btn btn-success userButton">Login</button>
+                                </div>
+                            </div>
+                        </form>    
+                    </div>            
+                    <div class="tabContent" id="register">
+                        <form action="/register" method="POST">
+                            <div class="form-group row formContent">
+                                <div class="col-md-6">
+                                        <label for="regEmail">Email</label>
+                                        <input class="form-control" id="regEmail" type="email" name="email" placeholder="email" required>
+                                        <label for="regUsername" class="mt-2">Username</label>
+                                        <input class="form-control" id="regUsername" type="text" name="username" placeholder="username" required>
+                                </div>        
+                                <div class="col-md-6">
+                                        <label for="regPassword">Password</label>
+                                        <input id="regPassword" class="form-control" type="password" name="password" placeholder="password" required onchange="getPassVal(this.value)">
+                                        <label for="password2" class="mt-2">Re-enter Password</label>
+                                        <input id="password2" class="form-control" type="password" placeholder="password" required oninput="checkPass(this.value)">    
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button disabled class="btn btn-success userButton disabled">Sign-Up</button>
+                                </div>
+                            </div>
+                        </form>    
+                    </div>
                 </div>
             </div>
+            </div>
         </div>
+
                 

@@ -1,23 +1,28 @@
 <% include ../partials/header %>
-<div class="container">
-    <header class="jumbotron">
-        <div class="container">
-            <h1>Welcome to YelpCamp!</h1>
-            <p>View our hand-picked campgrounds from all over the world.</p>
-            <p>
+<header class="campHeader">
+    <div class="container">
+        <h1 class="display-3"><i class="fab fa-free-code-camp"></i> Welcome to YelpCamp!</h1>
+        <p class="lead">Share your favorite campgrounds from all over the world!</p>
+        <p>
+            <% if(currentUser){ %>
                 <a href="/campgrounds/new" class="btn btn-primary btn-lg">Add a new campground!<i class="fas fa-plus pl-2"></i></a>
-            </p>
-        </div>
-    </header>
+            <% } else {%>
+                <a href="" onclick="loginForm(); oops();" data-toggle="modal" data-target="#loginModal" class="btn btn-primary btn-lg">Add a new campground!<i class="fas fa-plus pl-2"></i></a>
+                <% } %>
+        </p>
+    </div>
+</header>
 
+<div class="container mt-3">
+    
     <div class="row text-center" style="display:flex; flex-wrap: wrap;">
         <% campgrounds.forEach((campground) => { %>
-            <div class="col-md-3 col-sm-6">
-                <div class="card bg-secondary text-white mb-3">
-                    <img src="<%= campground.image %>" class="card-img">
-                    <div class="card-footer">
-                        <h4><%= campground.name %></h4>
-                        <p><a href="campgrounds/<%= campground.slug %>" class="btn btn-small btn-primary mt-1">More info</a></p>
+            <div class="col-md-4 col-sm-6">
+                <div class="card bg-light mb-3">
+                    <img src="<%= campground.image %>" class=" indImg card-img">
+                    <div class="card-footer mb-0 pb-0 d-flex flex-column justify-content-around indFoot">
+                        <h5><%= campground.name %></h5>
+                        <p class="mb-1"><a href="campgrounds/<%= campground.slug %>" class="btn btn-primary px-3 py-1"><i class="fas fa-info-circle"></i> More info</a></p>
                     </div>
                 </div>
             </div>
