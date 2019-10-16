@@ -11,7 +11,6 @@ var options = {
 };
 
 var geocoder = nodeGeocoder(options);
-console.log(process.env)
 // Index Route - show data //
 router.get("/test", (req, res) => {
     res.send(process.env.SECRET_KEY)
