@@ -32,7 +32,7 @@ app.use(express.static(`${__dirname}/public`));
 app.use(methodOverride("_method")); 
 app.use(flash());
 //Initialize database
-mongoose.connect("mongodb+srv://Admin:bman14480@yelpcampdb-hypxq.azure.mongodb.net/yelp_camp?retryWrites=true&w=majority", {
+mongoose.connect("mongodb+srv://Admin:" + process.env.DBPASS + "@yelpcampdb-hypxq.azure.mongodb.net/yelp_camp?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useFindAndModify: false,
     useCreateIndex: true,
