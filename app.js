@@ -1,3 +1,5 @@
+//Set Environment Variables with dotenv
+require("dotenv").config({path:__dirname+'/./app.env'});
 // Add packages to app //
 const express          = require("express"),
       bodyParser       = require("body-parser"),
@@ -30,7 +32,7 @@ app.use(express.static(`${__dirname}/public`));
 app.use(methodOverride("_method")); 
 app.use(flash());
 //Initialize database
-mongoose.connect("mongodb://localhost:27017/yelp_camp", {
+mongoose.connect("mongodb+srv://Admin:bman14480@yelpcampdb-hypxq.azure.mongodb.net/yelp_camp?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useFindAndModify: false,
     useCreateIndex: true,
